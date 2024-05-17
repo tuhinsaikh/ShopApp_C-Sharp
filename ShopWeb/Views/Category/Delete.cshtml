@@ -1,0 +1,16 @@
+﻿@model Category
+
+<form class="mt-5" method="post">
+    <input asp-for="Id" hidden />
+    <h4 class="mt-3 text-center justify-content-center gap-1">
+        <label>Category of </label>
+        <label class="text-info">@Model.Name</label>
+        <label>?</label>
+    </h4>
+    <div class="mt-3 text-center justify-content-center gap-1">
+        <button type="submit" class="btn btn-danger border-0" asp-controller="Category" asp-action="Delete">Delete</button>
+        <a class="btn btn-secondary border-0" asp-controller="Category" asp-action="Index">Cancel</a>
+    </div>
+</form>
+
+
