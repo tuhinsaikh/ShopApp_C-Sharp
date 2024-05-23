@@ -1,10 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using ShopWeb.Data;
+using ShopWeb.DataAccess.Repository;
+using ShopWeb.DataAccess.Repository.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddDbContext<ApplicationDbContext>(option => 
       option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -25,8 +28,14 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.MapAreaControllerRoute(
+    name: "MyAreaServices",
+    areaName: "Admin",
+    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();

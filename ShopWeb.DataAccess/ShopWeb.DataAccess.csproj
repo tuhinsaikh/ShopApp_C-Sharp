@@ -19,4 +19,8 @@
     <ProjectReference Include="..\ShopWeb.Models\ShopWeb.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>
