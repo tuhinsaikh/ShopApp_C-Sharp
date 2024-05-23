@@ -28,22 +28,27 @@ namespace ShopWeb.DataAccess.Repository
 
         public T Get(Expression<Func<T, bool>> predicate)
         {
-            throw new NotImplementedException();
+            IQueryable<T> query = dbSet;
+            query = dbSet.Where(predicate);
+            return query.FirstOrDefault();
         }
 
         public IEnumerable<T> GetAll()
         {
-            throw new NotImplementedException();
+            IQueryable<T> query = dbSet;
+            return query.ToList();
+            //IEnumerable<T> query = dbSet;
+            //return query.ToList();
         }
 
         public void Remove(T entity)
         {
-            throw new NotImplementedException();
+            _db.Remove(entity);
         }
 
-        public void RemoveRenge(IEnumerable<T> entities)
+        public void RemoveRange(IEnumerable<T> entities)
         {
-            throw new NotImplementedException();
+            _db.RemoveRange(entities);
         }
     }
 }

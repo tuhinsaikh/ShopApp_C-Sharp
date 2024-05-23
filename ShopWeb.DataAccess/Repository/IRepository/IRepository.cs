@@ -13,6 +13,6 @@ namespace ShopWeb.DataAccess.Repository.IRepository
         T Get(Expression<Func<T, bool>> predicate);
         void Remove(T entity);
         void Add(T entity);
-        void RemoveRenge(IEnumerable<T> entities);
+        void RemoveRange(IEnumerable<T> entities);
     }
 }

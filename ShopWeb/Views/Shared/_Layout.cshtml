@@ -14,24 +14,46 @@
         @{
             var controller = (string)ViewContext.RouteData.Values["Controller"];
             var action = (string)ViewContext.RouteData.Values["Action"];
+            var area = (string)ViewContext.RouteData.Values["Area"];
         }
         <nav class="navbar navbar-expand-lg bg-info" data-bs-theme="dark">
             <div class="container-fluid">
-                <a class="navbar-brand text-dark active" asp-controller="Home" asp-action="Index">ShopWeb</a>
+                <a class="navbar-brand text-dark" href="@Url.Action("Index", "Home", new { area = "Customer" })">ShopWeb</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarColor02">
                     <ul class="navbar-nav me-auto">
+                         <li class="nav-item">
+                            <a class="nav-link @(controller == "Home" && action == "Index" ? "active" : "")" href="@Url.Action("Index", "Home", new { area = "Customer" })">Home</a>
+                        </li>
+                       
                         <li class="nav-item">
+                            <a id="privacy" class="nav-link @(controller == "Home" && action == "Privacy" ? "active" : "")" href="@Url.Action("Privacy", "Home", new { area = "Customer" })">
+                                Privacy
+                                
+                            </a>
+                        </li> 
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Content Managment</a>
+                            <div class="dropdown-menu">
+                                <a class="nav-link @(controller == "Category" && action == "Index" || action == "Create" ? "active" : "")" href="@Url.Action("Index", "Category", new { area = "Admin" })">Category</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="nav-link @(controller == "Product" && action == "Index" || action == "Create" ? "active" : "")" href="@Url.Action("Index", "Product", new { area = "Admin" })">Product</a>
+
+                            </div>
+                        </li>
+                        @* <li>
                             <a class="nav-link @(controller == "Home" && action == "Index" ? "active" : "")" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link @(controller == "Category" && action == "Index" || action == "Create" ? "active" : "")" asp-controller="Category" asp-action="Index">Category</a>
+                        <li>
+                            <a class="nav-link @(controller == "Category" && action == "Index" || action == "Create" ? "active" : "")" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
+
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link @(controller == "Home" && action == "Privacy" ? "active" : "")" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        <li>
+                            <a id="privacy" class="nav-link @(controller == "Home" && action == "Privacy" ? "active" : "")" asp-area="Customer" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+                        </li> *@
                        
                     </ul>
                    
@@ -42,13 +64,13 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
-            <partial name="_Notification"/>
+            <partial name="_Notification" />
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
+    <footer class="border-top footer text-muted bg-info">
+        <div class="container text-dark-emphasis">
             &copy; 2024 - ShopWeb - By Tuhin Saikh
         </div>
     </footer>
@@ -58,3 +80,11 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+ <script>
+   
+        // document.getelementbyid("privacy").addeventlistener("click", function (event) {
+        //     event.preventdefault();
+        //     console.log("privacy link clicked");
+        // });
+
+</script> 

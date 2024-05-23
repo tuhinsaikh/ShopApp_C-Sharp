@@ -1,0 +1,81 @@
+﻿@model Product
+
+<div class="container pt-5 pb-2">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Create Product</h4>
+                </div>
+                <div class="card-body bg-light">
+                    <form method="post">
+                        <div class="row">
+                            <div class="col-md-6 pt-2">
+                                <label asp-for="Title" class="form-label"></label>
+                                <input asp-for="Title" class="form-control" placeholder="Enter Product Name" />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 pt-2">
+                                <label asp-for="ISBN" class="form-label"></label>
+                                <input asp-for="ISBN" class="form-control" placeholder="Enter ISBN" />
+                                <span asp-validation-for="ISBN" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 pt-2">
+                                <label asp-for="Author" class="form-label"></label>
+                                <input asp-for="Author" class="form-control" placeholder="Enter Author" />
+                                <span asp-validation-for="Author" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 pt-2">
+                                <label asp-for="ListPrice" class="form-label"></label>
+                                <input type="number" asp-for="ListPrice" class="form-control" placeholder="Enter List Price" />
+                                <span asp-validation-for="ListPrice" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 pt-2">
+                                <label asp-for="Price" class="form-label"></label>
+                                <input type="number" asp-for="Price" class="form-control" placeholder="Enter Price" />
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 pt-2">
+                                <label asp-for="Price50" class="form-label"></label>
+                                <input type="number" asp-for="Price50" class="form-control" placeholder="Enter Price50" />
+                                <span asp-validation-for="Price50" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 pt-2">
+                                <label asp-for="Price100" class="form-label"></label>
+                                <input type="number" asp-for="Price100" class="form-control" placeholder="Enter Price100" />
+                                <span asp-validation-for="Price100" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 pt-2">
+                                <label asp-for="Description" class="form-label"></label>
+                                <textarea asp-for="Description" class="form-control" placeholder="Enter Description"></textarea>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12 text-start">
+                                <div class="d-inline-block me-2">
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </div>
+                                <div class="d-inline-block">
+                                    <a class="btn btn-secondary" asp-controller="Product" asp-action="Index">Product List</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,22 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShopWeb.Data;
+using ShopWeb.DataAccess.Repository.IRepository;
 using ShopWeb.Models;
 using System.Security.Cryptography;
 
-namespace ShopWeb.Controllers
+namespace ShopWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IUnitOfWork _unitOfWork;
 
-         public CategoryController(ApplicationDbContext db)
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _db = db;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
-            List<Category> categories = _db.Categories.ToList();
+            List<Category> categories = _unitOfWork.Category.GetAll().ToList();
             return View(categories);
         }
         public IActionResult Create()
@@ -28,8 +30,8 @@ namespace ShopWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(category);
-                _db.SaveChanges();
+                _unitOfWork.Category.Add(category);
+                _unitOfWork.Save();
                 TempData["success"] = "Category created successfully";
                 return RedirectToAction("Index", "Category");
             }
@@ -38,10 +40,10 @@ namespace ShopWeb.Controllers
                 TempData["error"] = "Somthing went wrong";
                 return View();
             }
-        }  
+        }
         public IActionResult Edit(int? Id)
         {
-            Category? category = _db.Categories.FirstOrDefault(c => c.Id == Id);
+            Category? category = _unitOfWork.Category.Get(u => u.Id == Id);
             if (category == null) { return NotFound(); }
             return View(category);
         }
@@ -51,8 +53,8 @@ namespace ShopWeb.Controllers
 
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(category);
-                _db.SaveChanges();
+                _unitOfWork.Category.Update(category);
+                _unitOfWork.Save();
                 TempData["success"] = "Category updated successfully";
                 return RedirectToAction("Index", "Category");
             }
@@ -64,22 +66,24 @@ namespace ShopWeb.Controllers
         }
         public IActionResult Delete(int? Id)
         {
-            Category? category = _db.Categories.FirstOrDefault(c => c.Id == Id);
+            Category? category = _unitOfWork.Category.Get(u => u.Id == Id);
             if (category == null) { return NotFound(); }
             return View(category);
         }
         [HttpPost, ActionName("delete")]
         public IActionResult DeleteData(int? Id)
         {
-            Category? category = _db.Categories.FirstOrDefault(c => c.Id == Id);
-            if(category == null) {
+            Category? category = _unitOfWork.Category.Get(u => u.Id == Id);
+            if (category == null)
+            {
                 TempData["error"] = "Somthing went wrong";
-                return NotFound(); 
+                return NotFound();
             }
-            _db.Categories.Remove(category);
-            _db.SaveChanges();
+            _unitOfWork.Category.Remove(category);
+            _unitOfWork.Save();
             TempData["success"] = "Category deleted successfully";
             return RedirectToAction("Index", "Category");
         }
+
     }
 }
