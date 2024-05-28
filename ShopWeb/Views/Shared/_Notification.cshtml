@@ -6,6 +6,7 @@
     <script type="text/javascript">
         toastr.success('@TempData["success"]');
     </script>
+    TempData["sucess"] = null;
 }
 @if (TempData != null && TempData["error"] != null)
 {
@@ -14,4 +15,5 @@
     <script type="text/javascript">
         toastr.info('@TempData["error"]');
     </script>
+    TempData["error"] = null;
 }
