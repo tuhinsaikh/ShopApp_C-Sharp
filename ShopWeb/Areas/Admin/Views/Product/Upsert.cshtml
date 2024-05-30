@@ -1,0 +1,124 @@
+﻿@model ProductVM
+
+<div class="container pt-5 pb-2">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>@(Model.Product != null && Model.Product.Id != 0 ? "Update" : "Create") Product</h4>
+                </div>
+                <div class="card-body bg-light">
+                    <form method="post" enctype="multipart/form-data">
+                        <input hidden asp-for="@Model.Product.Id" />
+                        <input hidden asp-for="@Model.Product.ImgUrl" />
+                        <div class="row">
+                            <div class="col-md-6 pt-2">
+                                <label asp-for="@Model.Product.Title" class="form-label"></label>
+                                <input asp-for="@Model.Product.Title" class="form-control" placeholder="Enter Product Name" />
+                                <span asp-validation-for="@Model.Product.Title" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 pt-2">
+                                <label asp-for="@Model.Product.ISBN" class="form-label"></label>
+                                <input asp-for="@Model.Product.ISBN" class="form-control" placeholder="Enter ISBN" />
+                                <span asp-validation-for="@Model.Product.ISBN" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 pt-2">
+                                <label asp-for="@Model.Product.Author" class="form-label"></label>
+                                <input asp-for="@Model.Product.Author" class="form-control" placeholder="Enter Author" />
+                                <span asp-validation-for="@Model.Product.Author" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 pt-2">
+                                <label asp-for="@Model.Product.ListPrice" class="form-label"></label>
+                                <input type="number" asp-for="@Model.Product.ListPrice" class="form-control" placeholder="Enter List Price" />
+                                <span asp-validation-for="@Model.Product.ListPrice" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 pt-2">
+                                <label asp-for="@Model.Product.Price" class="form-label"></label>
+                                <input type="number" asp-for="@Model.Product.Price" class="form-control" placeholder="Enter Price" />
+                                <span asp-validation-for="@Model.Product.Price" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 pt-2">
+                                <label asp-for="@Model.Product.Price50" class="form-label"></label>
+                                <input type="number" asp-for="@Model.Product.Price50" class="form-control" placeholder="Enter Price for 50+" />
+                                <span asp-validation-for="@Model.Product.Price50" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 pt-2">
+                                <label asp-for="@Model.Product.Price100" class="form-label"></label>
+                                <input type="number" asp-for="@Model.Product.Price100" class="form-control" placeholder="Enter Price for 100+" />
+                                <span asp-validation-for="@Model.Product.Price100" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 pt-2">
+                                <label asp-for="@Model.Product.CategoryId" class="form-label"></label>
+                                <select asp-for="@Model.Product.CategoryId" class="form-control" asp-items="@Model.CategoryList">
+                                    <option disabled selected>Select Category</option>
+                                </select>
+                                <span asp-validation-for="@Model.Product.CategoryId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 pt-2">
+                                <label asp-for="@Model.Product.Description" class="form-label"></label>
+                                <textarea asp-for="@Model.Product.Description" class="form-control" placeholder="Enter Description"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 pt-2">
+                                <label asp-for="@Model.Product.ImgUrl" class="form-label"></label>
+                                <input type="file" name="file" asp-for="@Model.Product.ImgUrl" class="form-control" onchange="previewImage(event)" />
+                                <span asp-validation-for="@Model.Product.ImgUrl" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 pt-2 text-center">
+                                <img id="imgPreview" src="@(Model.Product.ImgUrl)" alt="Product Image" class="img-thumbnail" style="max-width: 150px; max-height: 150px;" />
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12 text-start">
+                                <div class="d-inline-block me-2">
+                                    @if (Model.Product != null && Model.Product.Id != 0)
+                                    {
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-primary">Create</button>
+                                    }
+                                </div>
+                                <div class="d-inline-block">
+                                    <a class="btn btn-secondary" asp-controller="Product" asp-action="Index">Product List</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                const output = document.getElementById('imgPreview');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons link lists searchreplace table visualblocks wordcount casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode mentions mergetags typography inlinecss markdown',
+            //toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap',
+        });
+    </script>
+ 
+}
+

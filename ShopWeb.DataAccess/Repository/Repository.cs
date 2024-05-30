@@ -26,17 +26,33 @@ namespace ShopWeb.DataAccess.Repository
             _db.Add(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> predicate)
+        public T Get(Expression<Func<T, bool>> predicate, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var includeProps in includeProperties.Split(new Char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProps);
+                }
+            }
             query = dbSet.Where(predicate);
             return query.FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
-            return query.ToList();
+            if(string.IsNullOrEmpty(includeProperties)) return query.ToList();
+            else
+            {
+                foreach(var includeProps in includeProperties.Split(new Char[] {','},StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProps);
+                }
+                return query.ToList();
+            }
+
             //IEnumerable<T> query = dbSet;
             //return query.ToList();
         }
