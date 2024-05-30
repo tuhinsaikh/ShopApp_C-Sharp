@@ -1,0 +1,65 @@
+﻿/* custom.css */
+body {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.table {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+    .table th, .table td {
+        border-color: #2c2c2c;
+    }
+
+    .table thead th {
+        background-color: #2a2a2a;
+        color: #ffffff;
+    }
+
+/* Ensure sorting icons are visible */
+table.dataTable thead th.sorting:before,
+table.dataTable thead th.sorting:after,
+table.dataTable thead th.sorting_asc:before,
+table.dataTable thead th.sorting_asc:after,
+table.dataTable thead th.sorting_desc:before,
+table.dataTable thead th.sorting_desc:after {
+    color: #ffffff !important;
+}
+
+/* DataTables specific styling for dark theme */
+.dataTables_wrapper .dataTables_filter input {
+    color: #ffffff;
+    background-color: #2c2c2c;
+    border: 1px solid #444444;
+}
+
+.dataTables_wrapper .dataTables_length select {
+    color: #ffffff;
+    background-color: #2c2c2c;
+    border: 1px solid #444444;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    color: #ffffff !important;
+    background-color: #2c2c2c !important;
+    border: 1px solid #444444 !important;
+}
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+        background-color: #444444 !important;
+        border: 1px solid #666666 !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+        color: #ffffff !important;
+        background-color: #4a4a4a !important;
+        border: 1px solid #666666 !important;
+    }
+
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_paginate {
+    color: #ffffff;
+}
+
