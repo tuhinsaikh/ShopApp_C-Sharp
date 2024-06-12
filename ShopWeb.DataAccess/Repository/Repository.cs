@@ -29,6 +29,7 @@ namespace ShopWeb.DataAccess.Repository
         public T Get(Expression<Func<T, bool>> predicate, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
+            query = dbSet.Where(predicate);
             if (!string.IsNullOrEmpty(includeProperties))
             {
                 foreach (var includeProps in includeProperties.Split(new Char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
@@ -36,7 +37,6 @@ namespace ShopWeb.DataAccess.Repository
                     query = query.Include(includeProps);
                 }
             }
-            query = dbSet.Where(predicate);
             return query.FirstOrDefault();
         }
 
