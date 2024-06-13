@@ -44,19 +44,9 @@
 
                             </div>
                         </li>
-                        @* <li>
-                            <a class="nav-link @(controller == "Home" && action == "Index" ? "active" : "")" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li>
-                            <a class="nav-link @(controller == "Category" && action == "Index" || action == "Create" ? "active" : "")" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
-
-                        </li>
-                        <li>
-                            <a id="privacy" class="nav-link @(controller == "Home" && action == "Privacy" ? "active" : "")" asp-area="Customer" asp-controller="Home" asp-action="Privacy">Privacy</a>
-
-                        </li> *@
                        
                     </ul>
+                    <partial name="_LoginPartial.cshtml" />
                    
                 </div>
             </div>
