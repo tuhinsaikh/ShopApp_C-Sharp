@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using ShopWeb.Models;
@@ -80,6 +81,11 @@ namespace ShopWeb.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
+            [Display(Name = "Name")]
+            public string Name { get; set; }
+
+
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -102,6 +108,10 @@ namespace ShopWeb.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            [Required]
+            public string Role { get; set; }
+            
+            public IEnumerable<SelectListItem> selectListItems { get; set; }
         }
 
 
@@ -112,6 +122,15 @@ namespace ShopWeb.Areas.Identity.Pages.Account
                 _roleManager.CreateAsync(new IdentityRole(UserRoles.Role_Customer)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(UserRoles.Role_Admin)).GetAwaiter().GetResult();
             }
+
+            Input = new()
+            {
+                selectListItems = _roleManager.Roles.Select(u => u.Name).Select(i => new SelectListItem
+                {
+                    Text = i,
+                    Value = i
+                })
+            };
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -123,13 +142,17 @@ namespace ShopWeb.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+                user.Name = Input.Name;
 
+                //await _userManager.SetUserNameAsync(user, Input.Name);
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                
 
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, Input.Role);
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
@@ -164,7 +187,7 @@ namespace ShopWeb.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private IdentityUser CreateUser()
+        private ApplicationUser CreateUser()
         {
             try
             {

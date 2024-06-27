@@ -4,14 +4,18 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
 
-<div class="row">
-    <div class="col-md-4">
+<div class="row w-100">
+    <div class="col-md-4 m-auto mt-5">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
+            <h3 class="text-primary">Create a new account</h3>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Name" class="form-control" autocomplete="name" aria-required="true" placeholder="Firstname Lastname" />
+                <label asp-for="Input.Name">Name</label>
+                <span asp-validation-for="Input.Name" class="text-danger"></span>
+            </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
                 <label asp-for="Input.Email">Email</label>
@@ -27,10 +31,16 @@
                 <label asp-for="Input.ConfirmPassword">Confirm Password</label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+            <div class="mb-3">
+                <select class="form-select" asp-for="Input.Role" asp-items="@Model.Input.selectListItems">
+                    <option disabled selected>Select Role </option>
+                </select>
+                <span asp-validation-for="Input.Role" class="text-danger"></span>
+            </div>
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>
     </div>
-    <div class="col-md-6 col-md-offset-2">
+   @*  <div class="col-md-6 col-md-offset-2">
         <section>
             <h3>Use another service to register.</h3>
             <hr />
@@ -59,7 +69,7 @@
                 }
             }
         </section>
-    </div>
+    </div> *@
 </div>
 
 @section Scripts {

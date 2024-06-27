@@ -5,6 +5,7 @@ using ShopWeb.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Identity;
 using ShopWeb.Utility;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using ShopWeb.Models;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +17,9 @@ builder.Services.AddScoped<IEmailSender, EmailSendercs>();
 builder.Services.AddDbContext<ApplicationDbContext>(option => 
       option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+
+
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
