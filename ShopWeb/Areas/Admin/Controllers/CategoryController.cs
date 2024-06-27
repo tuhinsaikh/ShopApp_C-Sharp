@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ShopWeb.Data;
 using ShopWeb.DataAccess.Repository.IRepository;
 using ShopWeb.Models;
+using ShopWeb.Utility;
 using System.Security.Cryptography;
 
 namespace ShopWeb.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area(UserRoles.Role_Admin)]
+    [Authorize(UserRoles.Role_Admin)]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
