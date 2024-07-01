@@ -17,8 +17,16 @@ builder.Services.AddScoped<IEmailSender, EmailSendercs>();
 builder.Services.AddDbContext<ApplicationDbContext>(option => 
       option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+
 builder.Services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy =>
+    {
+        policy.RequireRole("Admin");
+    });
+});
 
 builder.Services.AddRazorPages();
 
