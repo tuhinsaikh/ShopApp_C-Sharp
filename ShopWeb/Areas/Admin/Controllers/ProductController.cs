@@ -1,14 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Identity.Client;
 using ShopWeb.DataAccess.Repository;
 using ShopWeb.DataAccess.Repository.IRepository;
 using ShopWeb.Models;
 using ShopWeb.Models.ViewModel;
+using ShopWeb.Utility;
 
 namespace ShopWeb.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    //[Area("Admin")]
+    [Area(UserRoles.Role_Admin)]
+    [Authorize(UserRoles.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
